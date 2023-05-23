@@ -8,8 +8,15 @@ commonAnnotations:
   argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
 
 resources:
-  - git::https://github.com/openshift-pipelines/pipeline-service.git/developer/openshift/gitops/argocd/pipeline-service?ref=709ba3afe1cb80b9a8181849b7eb174e0d50f458
-  - git::https://github.com/openshift-pipelines/pipeline-service.git/developer/openshift/gitops/argocd/pipeline-service-storage?ref=709ba3afe1cb80b9a8181849b7eb174e0d50f458
+  - git::https://github.com/openshift-pipelines/pipeline-service.git/developer/openshift/gitops/argocd/pipeline-service?ref=9644d47a6cc62016af1b350aa8feb0e31cd7dd8b
+  - git::https://github.com/openshift-pipelines/pipeline-service.git/developer/openshift/gitops/argocd/pipeline-service-storage?ref=9644d47a6cc62016af1b350aa8feb0e31cd7dd8b
 
 components:
   - ../components/tekton-chains
+
+patches:
+  - path: scale-down-exporter.yaml
+    target:
+      kind: Deployment
+      name: pipeline-metrics-exporter
+      namespace: openshift-pipelines
