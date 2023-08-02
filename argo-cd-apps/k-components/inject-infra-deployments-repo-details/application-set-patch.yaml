@@ -4,4 +4,4 @@
   value: https://github.com/rsoaresd/infra-deployments.git
 - op: replace
   path: /spec/template/spec/source/targetRevision
-  value: preview-SVPI-567
+  value: preview-preview-SVPI-567
