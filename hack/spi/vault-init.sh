@@ -18,14 +18,14 @@ SPI_DATA_PATH_PREFIX=${SPI_DATA_PATH_PREFIX:-spi}
 SPI_POLICY_NAME=${SPI_DATA_PATH_PREFIX//\//-}
 
 function secretExists() {
-	oc --kubeconfig=${VAULT_KUBE_CONFIG} get secret ${SECRET_NAME} -n ${VAULT_NAMESPACE} &>/dev/null
+	oc --kubeconfig=${VAULT_KUBE_CONFIG} get secret ${SECRET_NAME} -n ${VAULT_NAMESPACE} 2>/dev/null
 }
 
 function init() {
 	INIT_STATE=$(isInitialized)
 	SECRET=$(secretExists)
 
-	echo $SECRET
+	echo "$SECRET"
 
 	# if secret does not exist in the second attempt, it means that something went wrong in the first one
 	if ! (kubectl --kubeconfig=${VAULT_KUBE_CONFIG} get secret ${SECRET_NAME} -n ${VAULT_NAMESPACE} &>/dev/null); then
