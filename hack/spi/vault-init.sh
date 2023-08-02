@@ -18,6 +18,7 @@ SPI_DATA_PATH_PREFIX=${SPI_DATA_PATH_PREFIX:-spi}
 SPI_POLICY_NAME=${SPI_DATA_PATH_PREFIX//\//-}
 
 function init() {
+	echo "oi"
 	INIT_STATE=$(isInitialized)
 	SECRET_EXISTS= oc --kubeconfig=${VAULT_KUBE_CONFIG} get secret ${SECRET_NAME} -n ${VAULT_NAMESPACE} 2>/dev/null
 	echo SECRET_EXISTS
