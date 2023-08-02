@@ -157,7 +157,7 @@ function initVault() {
 	sleep 5
 
 	init
-	secret
+	# secret
 	unseal
 	ensureRootToken
 	login
