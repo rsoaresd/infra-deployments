@@ -23,6 +23,7 @@ function init() {
 		vaultExec "vault operator init" >"${KEYS_FILE}"
 		echo "Keys written at ${KEYS_FILE}"
 	elif [ "$INIT_STATE" == "true" ]; then
+	    echo "here"
 		vaultExec "vault operator rekey" >"${KEYS_FILE}"
 		echo "Keys written at ${KEYS_FILE}"
 	else
