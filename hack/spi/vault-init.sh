@@ -30,7 +30,7 @@ function init() {
 	echo "${SECRET}"
 
 	# if secret does not exist in the second attempt, it means that something went wrong in the first one
-	if [[ "$INIT_STATE" == "false" || -z "${SECRET}" ]]; then
+	if [[ "$INIT_STATE" == "false" || -z "$SECRET" ]]; then
 		vaultExec "vault operator init" >"${KEYS_FILE}"
 		echo "Keys written at ${KEYS_FILE}"
 	elif [ "$INIT_STATE" == "true" ]; then
