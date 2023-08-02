@@ -19,7 +19,10 @@ SPI_POLICY_NAME=${SPI_DATA_PATH_PREFIX//\//-}
 
 function init() {
 	INIT_STATE=$(isInitialized)
-	if [ "$INIT_STATE" == "false" ]; then
+	SECRET_EXISTS= oc --kubeconfig=${VAULT_KUBE_CONFIG} get secret ${SECRET_NAME} -n ${VAULT_NAMESPACE} 2>/dev/null
+	echo SECRET_EXISTS
+	# if secret does not exist in the second attempt, it means that something went wrong in the first one
+	if [ "$INIT_STATE" == "false" ||  ! SECRET_EXISTS]; then
 		vaultExec "vault operator init" >"${KEYS_FILE}"
 		echo "Keys written at ${KEYS_FILE}"
 	elif [ "$INIT_STATE" == "true" ]; then
