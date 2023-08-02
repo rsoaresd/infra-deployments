@@ -17,15 +17,13 @@ ROOT_TOKEN_NAME=vault-root-token
 SPI_DATA_PATH_PREFIX=${SPI_DATA_PATH_PREFIX:-spi}
 SPI_POLICY_NAME=${SPI_DATA_PATH_PREFIX//\//-}
 
-# function secretExists() {
-# 	if oc --kubeconfig=${VAULT_KUBE_CONFIG} get secret ${SECRET_NAME} -n ${VAULT_NAMESPACE} &>/dev/null; then
-# 		echo "Secret ${SECRET_NAME} already exists. Skipping secret generation..."
-# 	fi
-# }
+function secretExists() {
+	oc --kubeconfig=${VAULT_KUBE_CONFIG} get secret ${SECRET_NAME} -n ${VAULT_NAMESPACE} &>/dev/null
+}
 
 function init() {
 	INIT_STATE=$(isInitialized)
-	SECRET=$(oc --kubeconfig=${VAULT_KUBE_CONFIG} get secret ${SECRET_NAME} -n ${VAULT_NAMESPACE} &>/dev/null)
+	SECRET=$(secretExists)
 
 	echo $SECRET
 
