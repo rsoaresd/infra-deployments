@@ -17,8 +17,8 @@ ROOT_TOKEN_NAME=vault-root-token
 SPI_DATA_PATH_PREFIX=${SPI_DATA_PATH_PREFIX:-spi}
 SPI_POLICY_NAME=${SPI_DATA_PATH_PREFIX//\//-}
 
-function secretExists () {
-    if oc --kubeconfig=${VAULT_KUBE_CONFIG} get secret ${SECRET_NAME} -n ${VAULT_NAMESPACE} 2>/dev/null; then
+function secretExists() {
+	if oc --kubeconfig=${VAULT_KUBE_CONFIG} get secret ${SECRET_NAME} -n ${VAULT_NAMESPACE} 2>/dev/null; then
 		echo "Secret ${SECRET_NAME} already exists. Skipping secret generation..."
 	fi
 }
@@ -30,7 +30,7 @@ function init() {
 	echo "${SECRET}"
 
 	# if secret does not exist in the second attempt, it means that something went wrong in the first one
-	if [[  -z "$SECRET" ]]; then
+	if [[ -z "$SECRET" ]]; then
 		vaultExec "vault operator init" >"${KEYS_FILE}"
 		echo "Keys written at ${KEYS_FILE}"
 	elif [ "$INIT_STATE" == "true" ]; then
