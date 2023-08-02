@@ -21,6 +21,8 @@ function secretExists() {
 	if oc --kubeconfig=${VAULT_KUBE_CONFIG} get secret ${SECRET_NAME} -n ${VAULT_NAMESPACE} 2>/dev/null; then
 		echo "Secret ${SECRET_NAME} already exists. Skipping secret generation..."
 	fi
+
+	echo ""
 }
 
 function init() {
