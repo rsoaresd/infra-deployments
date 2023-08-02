@@ -24,13 +24,9 @@ function secretExists () {
 }
 
 function init() {
-	echo "oi"
 	INIT_STATE=$(isInitialized)
-	echo "$INIT_STATE"
-	echo "middle"
 	SECRET=$(secretExists)
-	echo "${SECRET}"
-	echo "secret"
+
 	# if secret does not exist in the second attempt, it means that something went wrong in the first one
 	if [[ "$INIT_STATE" == "false" ||  -z "$SECRET" ]]; then
 		vaultExec "vault operator init" >"${KEYS_FILE}"
@@ -158,7 +154,7 @@ function initVault() {
 	sleep 5
 
 	init
-	# secret
+	secret
 	unseal
 	ensureRootToken
 	login
@@ -167,16 +163,16 @@ function initVault() {
 	applyPolicy
 }
 
-# if ! timeout 100s bash -c "while ! oc get applications.argoproj.io -n openshift-gitops -o name | grep -q spi-vault-in-cluster-local; do printf '.'; sleep 5; done"; then
-# 	printf "Application spi-vault-in-cluster-local not found (timeout)\n"
-# 	oc get apps -n openshift-gitops -o name
-# 	exit 1
-# else
-	# if [ "$(oc get applications.argoproj.io spi-vault-in-cluster-local -n openshift-gitops -o jsonpath='{.status.health.status} {.status.sync.status}')" != "Healthy Synced" ]; then
+if ! timeout 100s bash -c "while ! oc get applications.argoproj.io -n openshift-gitops -o name | grep -q spi-vault-in-cluster-local; do printf '.'; sleep 5; done"; then
+	printf "Application spi-vault-in-cluster-local not found (timeout)\n"
+	oc get apps -n openshift-gitops -o name
+	exit 1
+else
+	if [ "$(oc get applications.argoproj.io spi-vault-in-cluster-local -n openshift-gitops -o jsonpath='{.status.health.status} {.status.sync.status}')" != "Healthy Synced" ]; then
 		echo "Initializing vault"
 		initVault
 		echo "Vault initialization was completed"
-	# else
-	# 	echo "Vault initialization was skipped"
-	# fi
-# fi
+	else
+		echo "Vault initialization was skipped"
+	fi
+fi
