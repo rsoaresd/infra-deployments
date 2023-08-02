@@ -24,11 +24,15 @@ SPI_POLICY_NAME=${SPI_DATA_PATH_PREFIX//\//-}
 function init() {
 	INIT_STATE=$(isInitialized)
 
+	echo "here"
+
 	# if secret does not exist in the second attempt, it means that something went wrong in the first one
 	if ! oc --kubeconfig=${VAULT_KUBE_CONFIG} get secret ${SECRET_NAME} -n ${VAULT_NAMESPACE} &>/dev/null; then
 		vaultExec "vault operator init" >"${KEYS_FILE}"
 		echo "Keys written at ${KEYS_FILE}"
 	fi
+
+	echo "end"
 }
 
 function isInitialized() {
