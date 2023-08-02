@@ -27,6 +27,8 @@ function init() {
 	INIT_STATE=$(isInitialized)
 	SECRET=$(secretExists)
 
+	echo "$SECRET"
+
 	# if secret does not exist in the second attempt, it means that something went wrong in the first one
 	if [[ "$INIT_STATE" == "false" ||  -z "$SECRET" ]]; then
 		vaultExec "vault operator init" >"${KEYS_FILE}"
