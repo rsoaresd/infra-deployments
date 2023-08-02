@@ -28,11 +28,6 @@ function init() {
 	if ! oc --kubeconfig=${VAULT_KUBE_CONFIG} get secret ${SECRET_NAME} -n ${VAULT_NAMESPACE} 2>/dev/null; then
 		vaultExec "vault operator init" >"${KEYS_FILE}"
 		echo "Keys written at ${KEYS_FILE}"
-	elif [ "$INIT_STATE" == "true" ]; then
-		echo "Vault already initialized"
-	else
-		echo "$INIT_STATE"
-		exit 1
 	fi
 }
 
