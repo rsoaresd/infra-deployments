@@ -25,9 +25,9 @@ function secretExists() {
 
 function init() {
 	INIT_STATE=$(isInitialized)
-	SECRET=$(secretExists)
+	# SECRET=$(secretExists)
 
-	echo "${SECRET}"
+	# echo "${SECRET}"
 
 	# if secret does not exist in the second attempt, it means that something went wrong in the first one
 	if ! (oc --kubeconfig=${VAULT_KUBE_CONFIG} get secret ${SECRET_NAME} -n ${VAULT_NAMESPACE} &>/dev/null); then
