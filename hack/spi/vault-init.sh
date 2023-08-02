@@ -17,24 +17,17 @@ ROOT_TOKEN_NAME=vault-root-token
 SPI_DATA_PATH_PREFIX=${SPI_DATA_PATH_PREFIX:-spi}
 SPI_POLICY_NAME=${SPI_DATA_PATH_PREFIX//\//-}
 
-function secretExists() {
-	oc --kubeconfig=${VAULT_KUBE_CONFIG} get secret ${SECRET_NAME} -n ${VAULT_NAMESPACE} --ignore-not-found
-}
-
 function init() {
 	INIT_STATE=$(isInitialized)
-	EXISTS=$(secretExists)
-
-echo "${EXISTS}"
-
-	# if secret does not exist in the second attempt, it means that something went wrong in the first one
-	if ! oc --kubeconfig=${VAULT_KUBE_CONFIG} get secret ${SECRET_NAME} -n ${VAULT_NAMESPACE} 2>/dev/null; then
-		echo "entr"
+	if [ "$INIT_STATE" == "false" ]; then
 		vaultExec "vault operator init" >"${KEYS_FILE}"
 		echo "Keys written at ${KEYS_FILE}"
+	elif [ "$INIT_STATE" == "true" ]; then
+		echo "Vault already initialized"
+	else
+		echo "$INIT_STATE"
+		exit 1
 	fi
-
-	echo "end"
 }
 
 function isInitialized() {
