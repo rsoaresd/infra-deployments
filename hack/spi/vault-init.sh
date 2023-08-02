@@ -20,7 +20,7 @@ SPI_POLICY_NAME=${SPI_DATA_PATH_PREFIX//\//-}
 function init() {
 	INIT_STATE=$(isInitialized)
     if ! oc --kubeconfig=${VAULT_KUBE_CONFIG} get secret ${SECRET_NAME} -n ${VAULT_NAMESPACE} 2>/dev/null; then
-		vaultExec "vault operator rekey -init -key-shares=15 -key-threshold=9" >"${KEYS_FILE}"
+		vaultExec "vault operator rekey -verify -nonce="..."" >"${KEYS_FILE}"
 		echo "Keys written at ${KEYS_FILE}"
 	elif [ "$INIT_STATE" == "true" ]; then
 		echo "Vault already initialized"
