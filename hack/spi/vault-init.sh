@@ -1,4 +1,4 @@
-#!/bin/bash -e
+#!/bin/bash
 
 # !!! Note that this script should not be used for production purposes !!!
 
@@ -17,18 +17,16 @@ ROOT_TOKEN_NAME=vault-root-token
 SPI_DATA_PATH_PREFIX=${SPI_DATA_PATH_PREFIX:-spi}
 SPI_POLICY_NAME=${SPI_DATA_PATH_PREFIX//\//-}
 
-# function secretExists() {
-# 	oc --kubeconfig=${VAULT_KUBE_CONFIG} get secret ${SECRET_NAME} -n ${VAULT_NAMESPACE} 2>/dev/null
-# }
+function secretExists() {
+	oc --kubeconfig=${VAULT_KUBE_CONFIG} get secret ${SECRET_NAME} -n ${VAULT_NAMESPACE} --ignore-not-found
+}
 
 function init() {
 	INIT_STATE=$(isInitialized)
+	EXISTS=$(secretExists)
 
-	echo "here"
+echo "${EXISTS}"
 
-	var=$(oc --kubeconfig=${VAULT_KUBE_CONFIG} get secret ${SECRET_NAME} -n ${VAULT_NAMESPACE} 2>/dev/null)
-
-echo "Hello $var, happy to see you again"
 	# if secret does not exist in the second attempt, it means that something went wrong in the first one
 	if ! oc --kubeconfig=${VAULT_KUBE_CONFIG} get secret ${SECRET_NAME} -n ${VAULT_NAMESPACE} 2>/dev/null; then
 		echo "entr"
