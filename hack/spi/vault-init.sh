@@ -20,7 +20,10 @@ SPI_POLICY_NAME=${SPI_DATA_PATH_PREFIX//\//-}
 function secretExists () {
     if oc --kubeconfig=${VAULT_KUBE_CONFIG} get secret ${SECRET_NAME} -n ${VAULT_NAMESPACE} 2>/dev/null; then
 		echo "Secret ${SECRET_NAME} already exists. Skipping secret generation..."
+		return 0
 	fi
+
+	return 1
 }
 
 function init() {
@@ -29,7 +32,7 @@ function init() {
 	echo "$INIT_STATE"
 	echo "middle"
 	SECRET=$(secretExists)
-	echo "$SECRET"
+	echo "${SECRET}"
 	echo "secret"
 	# if secret does not exist in the second attempt, it means that something went wrong in the first one
 	if [[ "$INIT_STATE" == "false" ||  -z "$SECRET" ]]; then
