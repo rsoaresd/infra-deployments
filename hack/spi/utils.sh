@@ -21,7 +21,7 @@ function audit() {
 
 function vaultExec() {
 	COMMAND=${1}
-	oc --kubeconfig=${VAULT_KUBE_CONFIG} exec ${VAULT_PODNAME} -n ${VAULT_NAMESPACE} -- sh -c "${COMMAND}" 2>/dev/null
+	oc --kubeconfig=${VAULT_KUBE_CONFIG} exec ${VAULT_PODNAME} -n ${VAULT_NAMESPACE} -- sh -c "${COMMAND}"
 }
 
 function approleSet() {
