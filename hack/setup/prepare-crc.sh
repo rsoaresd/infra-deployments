@@ -70,7 +70,7 @@ fi
 
 #Point local environment clients (kubectl and oc) to the CRC cluster
 eval $("$CRCBINARY" oc-env)
-kubectl config use-context crc-admin
+oc config use-context crc-admin
 
 #Reduce cpu resource request for each AppStudio Application
 #TODO: Check when to run the reduce gitops cpu requests
