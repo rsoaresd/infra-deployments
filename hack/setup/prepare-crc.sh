@@ -66,7 +66,7 @@ fi
 #existing cluster
 
 #Start CRC with modified configs
-"$CRCBINARY" start
+"$CRCBINARY" start -p /Users/rsoaresd/Downloads/pull-secret.txt
 
 #Point local environment clients (kubectl and oc) to the CRC cluster
 eval $("$CRCBINARY" oc-env)
