@@ -7,7 +7,7 @@ source $(dirname "$0")/utils.sh
 set -e
 
 mkdir -p $HOME/.tmp
-echo '' > $HOME/.tmp/keys-file
+touch $HOME/.tmp/keys-file
 
 VAULT_KUBE_CONFIG=${VAULT_KUBE_CONFIG:-${KUBECONFIG:-$HOME/.kube/config}}
 VAULT_NAMESPACE=${VAULT_NAMESPACE:-spi-vault}
@@ -149,7 +149,7 @@ function initVault() {
 	sleep 5
 
 	init
-	secret
+	# secret
 	unseal
 	ensureRootToken
 	login
