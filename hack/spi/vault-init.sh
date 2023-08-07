@@ -158,16 +158,16 @@ function initVault() {
 	applyPolicy
 }
 
-if ! timeout 100s bash -c "while ! oc get applications.argoproj.io -n openshift-gitops -o name | grep -q spi-vault-in-cluster-local; do printf '.'; sleep 5; done"; then
-	printf "Application spi-vault-in-cluster-local not found (timeout)\n"
-	oc get apps -n openshift-gitops -o name
-	exit 1
-else
-	if [ "$(oc get applications.argoproj.io spi-vault-in-cluster-local -n openshift-gitops -o jsonpath='{.status.health.status} {.status.sync.status}')" != "Healthy Synced" ]; then
-		echo "Initializing vault"
+# if ! timeout 100s bash -c "while ! oc get applications.argoproj.io -n openshift-gitops -o name | grep -q spi-vault-in-cluster-local; do printf '.'; sleep 5; done"; then
+# 	printf "Application spi-vault-in-cluster-local not found (timeout)\n"
+# 	oc get apps -n openshift-gitops -o name
+# 	exit 1
+# else
+# 	if [ "$(oc get applications.argoproj.io spi-vault-in-cluster-local -n openshift-gitops -o jsonpath='{.status.health.status} {.status.sync.status}')" != "Healthy Synced" ]; then
+# 		echo "Initializing vault"
 		initVault
 		echo "Vault initialization was completed"
-	else
-		echo "Vault initialization was skipped"
-	fi
-fi
+# 	else
+# 		echo "Vault initialization was skipped"
+# 	fi
+# fi
