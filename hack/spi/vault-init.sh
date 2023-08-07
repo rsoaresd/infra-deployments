@@ -7,6 +7,7 @@ source $(dirname "$0")/utils.sh
 set -e
 
 mkdir -p $HOME/.tmp
+touch $HOME/.tmp/keys-file
 
 VAULT_KUBE_CONFIG=${VAULT_KUBE_CONFIG:-${KUBECONFIG:-$HOME/.kube/config}}
 VAULT_NAMESPACE=${VAULT_NAMESPACE:-spi-vault}
