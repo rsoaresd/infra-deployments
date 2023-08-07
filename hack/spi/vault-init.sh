@@ -21,6 +21,8 @@ SPI_DATA_PATH_PREFIX=${SPI_DATA_PATH_PREFIX:-spi}
 SPI_POLICY_NAME=${SPI_DATA_PATH_PREFIX//\//-}
 
 function init() {
+
+	echo "${KEYS_FILE}"
 	INIT_STATE=$(isInitialized)
 	if [ "$INIT_STATE" == "false" ]; then
 		echo '' >${KEYS_FILE}
