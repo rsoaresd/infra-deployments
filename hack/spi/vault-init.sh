@@ -7,14 +7,13 @@ source $(dirname "$0")/utils.sh
 set -e
 
 mkdir -p $HOME/.tmp
-touch $HOME/.tmp/keys-file
+echo '' > $HOME/.tmp/keys-file
 
 VAULT_KUBE_CONFIG=${VAULT_KUBE_CONFIG:-${KUBECONFIG:-$HOME/.kube/config}}
 VAULT_NAMESPACE=${VAULT_NAMESPACE:-spi-vault}
 SECRET_NAME=spi-vault-keys
 VAULT_PODNAME=${VAULT_PODNAME:-vault-0}
-KEYS_FOLDER=$HOME/.tmp
-KEYS_FILE=${KEYS_FILE:-$($KEYS_FOLDER/keys-file)}
+KEYS_FILE=${KEYS_FILE:-$($HOME/.tmp/keys-file)}
 ROOT_TOKEN=""
 ROOT_TOKEN_NAME=vault-root-token
 
