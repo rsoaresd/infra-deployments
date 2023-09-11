@@ -84,6 +84,7 @@ fi
 
 MY_GIT_REPO_URL=$(git ls-remote --get-url $MY_GIT_FORK_REMOTE | sed 's|^git@github.com:|https://github.com/|')
 MY_GIT_BRANCH=$(git rev-parse --abbrev-ref HEAD)
+echo $MY_GIT_BRANCH
 trap "git checkout $MY_GIT_BRANCH" EXIT
 
 
