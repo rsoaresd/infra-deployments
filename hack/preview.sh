@@ -84,7 +84,6 @@ fi
 
 MY_GIT_REPO_URL=$(git ls-remote --get-url $MY_GIT_FORK_REMOTE | sed 's|^git@github.com:|https://github.com/|')
 MY_GIT_BRANCH=$(git rev-parse --abbrev-ref HEAD)
-echo $MY_GIT_BRANCH
 trap "git checkout $MY_GIT_BRANCH" EXIT
 
 
@@ -103,13 +102,6 @@ if ! git diff --exit-code --quiet; then
     echo "Changes in working Git working tree, commit them or stash them"
     exit 1
 fi
-
-# Create preview branch for preview configuration
-PREVIEW_BRANCH=preview-${MY_GIT_BRANCH}${TEST_BRANCH_ID+-$TEST_BRANCH_ID}
-
-# Save PREVIEW_BRANCH to keep track of the preview branch
-# In case of a e2e-tests ci job, it makes sense to delete this branch after running the tests
-export PREVIEW_BRANCH=${PREVIEW_BRANCH}
 
 if git rev-parse --verify $PREVIEW_BRANCH &> /dev/null; then
     git branch -D $PREVIEW_BRANCH
