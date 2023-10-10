@@ -58,3 +58,9 @@ kind: ApplicationSet
 metadata:
   name: enable-dvo
 $patch: delete
+---
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: perf-team-prometheus-reader-in-cluster-local
+$patch: delete
