@@ -2,28 +2,61 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 
 # Skip applying the Tekton/PaC operands while the Tekton/PaC operator is being installed.
-# See more information about this option, here: 
-# https://argo-cd.readthedocs.io/en/stable/user-guide/sync-options/#skip-dry-run-for-new-custom-resources-types 
+# See more information about this option, here:
+# https://argo-cd.readthedocs.io/en/stable/user-guide/sync-options/#skip-dry-run-for-new-custom-resources-types
 commonAnnotations:
   argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
 
 resources:
-  - https://github.com/openshift-pipelines/pipeline-service.git/developer/openshift/gitops/argocd/pipeline-service?ref=408b2b718e5ca8e17b2b628445c9bff1db4c907d
-  - https://github.com/openshift-pipelines/pipeline-service.git/developer/openshift/gitops/argocd/pipeline-service-storage?ref=408b2b718e5ca8e17b2b628445c9bff1db4c907d
+  - github.com/minio/operator?ref=v5.0.15
+  - main-pipeline-service-configuration.yaml
+  - dev-only-pipeline-service-storage-configuration.yaml
   - ../base/rbac
 
 patches:
-  - path: metrics-exporter-trace.yaml
-    target:
+  - target:
+      kind: Service
+      name: operator
+      namespace: minio-operator
+    patch: |
+      - op: add
+        path: /metadata/annotations/ignore-check.kube-linter.io~1dangling-service
+        value: This service is not dangling. The minio operator assigns the missing labels at runtime.
+  - target:
       kind: Deployment
-      name: pipeline-metrics-exporter
-      namespace: openshift-pipelines
-#  - path: scale-down-exporter.yaml
-#    target:
-#      kind: Deployment
-#      name: pipeline-metrics-exporter
-#      namespace: openshift-pipelines
-  - path: update-tekton-config-performance.yaml
-    target:
-      kind: TektonConfig
-      name: config
+      name: minio-operator
+      namespace: minio-operator
+    patch: |
+      - op: add
+        path: /metadata/annotations/ignore-check.kube-linter.io~1no-read-only-root-fs
+        value: The operator needs to be able to write to /tmp
+      - op: add
+        path: /spec/template/spec/containers/0/resources/limits
+        value:
+          cpu: 200m
+          memory: 256Mi
+      - op: remove
+        path: /spec/template/spec/containers/0/securityContext/runAsUser
+      - op: remove
+        path: /spec/template/spec/containers/0/securityContext/runAsGroup
+  - target:
+      kind: Deployment
+      name: console
+      namespace: minio-operator
+    patch: |
+      - op: add
+        path: /spec/template/spec/containers/0/resources
+        value:
+          requests:
+            cpu: 50m
+            memory: 64Mi
+          limits:
+            cpu: 100m
+            memory: 128Mi
+      - op: remove
+        path: /spec/template/spec/containers/0/securityContext/runAsUser
+      - op: remove
+        path: /spec/template/spec/containers/0/securityContext/runAsGroup
+      - op: add
+        path: /spec/template/spec/containers/0/securityContext/readOnlyRootFilesystem
+        value: true

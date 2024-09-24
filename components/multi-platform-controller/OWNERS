@@ -1,9 +1,13 @@
 # See the OWNERS docs: https://go.k8s.io/owners
 
 approvers:
-- stuartwdouglas
+- ifireball
 - arewm
+- hugares
+- mshaposhnik
 
 reviewers:
-- stuartwdouglas
+- ifireball
 - arewm
+- hugares
+- mshaposhnik

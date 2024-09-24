@@ -1,0 +1,58 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: tracing-workload-otel-collector
+  labels:
+    noSourceTransform: "true"
+spec:
+  generators:
+  - merge:
+      mergeKeys:
+        - nameNormalized
+      generators:
+        - clusters:
+            values:
+              sourceRoot: components/tracing/otel-collector
+              environment: staging
+              clusterDir: ""
+        - list:
+            elements: []
+  template:
+    metadata:
+      name: tracing-workload-otel-collector-{{nameNormalized}}
+    spec:
+      project: default
+      sources:
+          # Chart from OTel Project
+        - chart: opentelemetry-collector
+          repoURL: https://open-telemetry.github.io/opentelemetry-helm-charts
+          targetRevision: 0.101.2
+          helm:
+            parameters:
+              - name: "image.repository"
+                value: "quay.io/konflux-ci/opentelemetry-collector-k8s"
+              - name: "mode"
+                value: deployment
+              - name: "fullnameOverride"
+                value: "open-telemetry-opentelemetry-collector"
+            valueFiles:
+            - $values/{{values.sourceRoot}}/{{values.environment}}/otel-collector-helm-values.yaml
+          # Values for chart from git
+        - repoURL: https://github.com/redhat-appstudio/infra-deployments.git
+          targetRevision: main
+          ref: values
+      destination:
+        namespace: konflux-otel
+        server: '{{server}}'
+      syncPolicy:
+        automated:
+          prune: true
+          selfHeal: true
+        syncOptions:
+          - CreateNamespace=true
+        retry:
+          limit: 50
+          backoff:
+            duration: 10s
+            factor: 2
+            maxDuration: 3m

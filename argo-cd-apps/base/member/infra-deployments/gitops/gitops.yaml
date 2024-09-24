@@ -15,8 +15,6 @@ spec:
                 clusterDir: base
           - list:
               elements:
-                - nameNormalized: stone-stg-m01
-                  values.clusterDir: stone-stg-m01
                 - nameNormalized: stone-stg-rh01
                   values.clusterDir: stone-stg-rh01
                 - nameNormalized: stone-prd-m01
@@ -27,6 +25,8 @@ spec:
                   values.clusterDir: stone-stage-p01
                 - nameNormalized: stone-prod-p01
                   values.clusterDir: stone-prod-p01
+                - nameNormalized: stone-prod-p02
+                  values.clusterDir: stone-prod-p02
   template:
     metadata:
       name: gitops-{{nameNormalized}}

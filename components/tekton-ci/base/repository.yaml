@@ -9,65 +9,23 @@ spec:
 apiVersion: pipelinesascode.tekton.dev/v1alpha1
 kind: Repository
 metadata:
-  name: e2e-tests
-spec:
-  url: "https://github.com/redhat-appstudio/e2e-tests"
----
-apiVersion: pipelinesascode.tekton.dev/v1alpha1
-kind: Repository
-metadata:
   name: application-api
 spec:
-  url: "https://github.com/redhat-appstudio/application-api"
+  url: "https://github.com/konflux-ci/application-api"
 ---
 apiVersion: pipelinesascode.tekton.dev/v1alpha1
 kind: Repository
 metadata:
   name: clair-in-ci-db
 spec:
-  url: "https://github.com/redhat-appstudio/clair-in-ci-db"
+  url: "https://github.com/konflux-ci/clair-in-ci-db"
 ---
 apiVersion: pipelinesascode.tekton.dev/v1alpha1
 kind: Repository
 metadata:
-  name: hacbs-test
+  name: konflux-test
 spec:
-  url: "https://github.com/redhat-appstudio/hacbs-test"
----
-apiVersion: pipelinesascode.tekton.dev/v1alpha1
-kind: Repository
-metadata:
-  name: build-service
-spec:
-  url: "https://github.com/redhat-appstudio/build-service"
----
-apiVersion: pipelinesascode.tekton.dev/v1alpha1
-kind: Repository
-metadata:
-  name: build-definitions
-spec:
-  url: "https://github.com/redhat-appstudio/build-definitions"
----
-apiVersion: pipelinesascode.tekton.dev/v1alpha1
-kind: Repository
-metadata:
-  name: jvm-build-service
-spec:
-  url: "https://github.com/redhat-appstudio/jvm-build-service"
----
-apiVersion: pipelinesascode.tekton.dev/v1alpha1
-kind: Repository
-metadata:
-  name: jvm-build-service-builder-images
-spec:
-  url: "https://github.com/redhat-appstudio/jvm-build-service-builder-images"
----
-apiVersion: pipelinesascode.tekton.dev/v1alpha1
-kind: Repository
-metadata:
-  name: tekton-results
-spec:
-  url: "https://github.com/openshift-pipelines/tektoncd-results"
+  url: "https://github.com/konflux-ci/konflux-test"
 ---
 apiVersion: pipelinesascode.tekton.dev/v1alpha1
 kind: Repository
@@ -79,20 +37,6 @@ spec:
 apiVersion: pipelinesascode.tekton.dev/v1alpha1
 kind: Repository
 metadata:
-  name: sprayproxy
-spec:
-  url: "https://github.com/redhat-appstudio/sprayproxy"
----
-apiVersion: pipelinesascode.tekton.dev/v1alpha1
-kind: Repository
-metadata:
-  name: pipeline-service-exporter
-spec:
-  url: "https://github.com/openshift-pipelines/pipeline-service-exporter"
----
-apiVersion: pipelinesascode.tekton.dev/v1alpha1
-kind: Repository
-metadata:
   name: cachi2
 spec:
   url: "https://github.com/containerbuildsystem/cachi2"
@@ -100,6 +44,6 @@ spec:
 apiVersion: pipelinesascode.tekton.dev/v1alpha1
 kind: Repository
 metadata:
-  name: pipeline-service
+  name: infra-deployments
 spec:
-  url: "https://github.com/openshift-pipelines/pipeline-service"
+  url: "https://github.com/redhat-appstudio/infra-deployments"

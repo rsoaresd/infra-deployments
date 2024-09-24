@@ -184,7 +184,7 @@ access to all the repos you're going to create/fork into your org in the future.
 **Simple build:**
 
 * Fork <https://github.com/devfile-samples/devfile-sample-python-basic> into your GitHub organization.
-* Run `hack/build/build-via-appstudio.sh https://github.com/MY_STONESOUP_ORG/devfile-sample-python-basic`
+* Run `hack/build/build-via-appstudio.sh https://github.com/MY_STONESOUP_ORG/devfile-sample-python-basic <path-to-repository-dockerfile>`
 
 The script will create a test application and a component for you:
 
@@ -248,7 +248,7 @@ it's in [components/build-service/base/kustomization.yaml][build-service-kustomi
 ```yaml
 resources:
 - allow-argocd-to-manage.yaml
-- https://github.com/redhat-appstudio/build-service/config/default?ref=99cebd0a67a6b25b8ccffb76522861f526c762de
+- https://github.com/konflux-ci/build-service/config/default?ref=99cebd0a67a6b25b8ccffb76522861f526c762de
 ```
 
 Replace this reference with a reference to your fork and the commit you would like to test. Create

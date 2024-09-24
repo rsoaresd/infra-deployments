@@ -1435,13 +1435,25 @@ spec:
     users:
       - credentials:
           - type: password
-            value: user1
+            value: user2
         email: user1@user.us
         emailVerified: true
         enabled: true
         firstName: user1
         id: user1
         username: user1
+        clientRoles:
+          realm-management:
+            - "manage-users"
+      - credentials:
+          - type: password
+            value: e2e-hac-user2
+        email: e2e-hac-user@user.us
+        emailVerified: true
+        enabled: true
+        firstName: e2e-hac-user
+        id: e2e-hac-user
+        username: e2e-hac-user
         clientRoles:
           realm-management:
             - "manage-users"

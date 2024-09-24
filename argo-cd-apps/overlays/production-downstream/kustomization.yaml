@@ -1,9 +1,13 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
-  - ../staging
+  - ../konflux-public-staging
   - ../../base/smee-client
   - ../../base/ui
+  - ../../base/ca-bundle
+  - ../../base/keycloak
+  - ../../base/repository-validator
+  - ../../base/cluster-secret-store-rh
 patchesStrategicMerge:
   - delete-applications.yaml
 namespace: argocd
@@ -38,17 +42,6 @@ patches:
       kind: ApplicationSet
       version: v1alpha1
       name: has
-  - path: production-overlay-patch.yaml
-    target:
-      kind: ApplicationSet
-      version: v1alpha1
-      name: spi
-  - path: production-overlay-patch.yaml
-    target:
-      kind: ApplicationSet
-      version: v1alpha1
-      name: remote-secret-controller
-  - path: production-overlay-patch.yaml
     target:
       kind: ApplicationSet
       version: v1alpha1
@@ -68,6 +61,11 @@ patches:
       kind: ApplicationSet
       version: v1alpha1
       name: tekton-ci
+  - path: production-overlay-patch.yaml
+    target:
+      kind: ApplicationSet
+      version: v1alpha1
+      name: konflux-ci
   - path: production-overlay-patch.yaml
     target:
       kind: ApplicationSet
@@ -97,16 +95,6 @@ patches:
     target:
       kind: ApplicationSet
       version: v1alpha1
-      name: segment-bridge-host
-  - path: production-overlay-patch.yaml
-    target:
-      kind: ApplicationSet
-      version: v1alpha1
-      name: segment-bridge-member
-  - path: production-overlay-patch.yaml
-    target:
-      kind: ApplicationSet
-      version: v1alpha1
       name: toolchain-host-operator
   - path: production-overlay-patch.yaml
     target:
@@ -127,6 +115,11 @@ patches:
     target:
       kind: ApplicationSet
       version: v1alpha1
+      name: mintmaker
+  - path: production-overlay-patch.yaml
+    target:
+      kind: ApplicationSet
+      version: v1alpha1
       name: backup
   - path: production-overlay-patch.yaml
     target:
@@ -143,3 +136,58 @@ patches:
       kind: ApplicationSet
       version: v1alpha1
       name: ui
+  - path: production-overlay-patch.yaml
+    target:
+      kind: ApplicationSet
+      version: v1alpha1
+      name: smee-client
+  - path: production-overlay-patch.yaml
+    target:
+      kind: ApplicationSet
+      version: v1alpha1
+      name: ca-bundle
+  - path: production-overlay-patch.yaml
+    target:
+      kind: ApplicationSet
+      version: v1alpha1
+      name: keycloak
+  - path: production-overlay-patch.yaml
+    target:
+      kind: ApplicationSet
+      version: v1alpha1
+      name: repository-validator
+  - path: production-overlay-patch.yaml
+    target:
+      kind: ApplicationSet
+      version: v1alpha1
+      name: project-controller
+  - path: production-overlay-patch.yaml
+    target:
+      kind: ApplicationSet
+      version: v1alpha1
+      name: spacerequest-cleaner
+  - path: production-overlay-patch.yaml
+    target:
+      kind: ApplicationSet
+      version: v1alpha1
+      name: cluster-as-a-service
+  - path: production-overlay-patch.yaml
+    target:
+      kind: ApplicationSet
+      version: v1alpha1
+      name: tracing-workload-otel-collector
+  - path: production-overlay-patch.yaml
+    target:
+      kind: ApplicationSet
+      version: v1alpha1
+      name: tracing-workload-tracing
+  - path: production-overlay-patch.yaml
+    target:
+      kind: ApplicationSet
+      version: v1alpha1
+      name: workspaces
+  - path: production-overlay-patch.yaml
+    target:
+      kind: ApplicationSet
+      version: v1alpha1
+      name: notification-controller

@@ -5,8 +5,13 @@ resources:
   - ../../base/host
   - ../../base/host/optional/infra-deployments/dev-sso
   - ../../base/member
-  - ../../base/member/optional/infra-deployments/spi-vault
   - ../../base/all-clusters
+  - ../../base/ca-bundle
+  - ../../base/repository-validator
+  - ../../base/keycloak
+  - ../../base/ui
+  - ../../base/eaas
+  - ../../base/toolchain-member
 
 patchesStrategicMerge:
   - delete-applications.yaml
@@ -37,16 +42,6 @@ patches:
       kind: ApplicationSet
       version: v1alpha1
       name: has
-  - path: development-overlay-patch.yaml
-    target:
-      kind: ApplicationSet
-      version: v1alpha1
-      name: spi
-  - path: development-overlay-patch.yaml
-    target:
-      kind: ApplicationSet
-      version: v1alpha1
-      name: remote-secret-controller
   - path: development-overlay-patch.yaml
     target:
       kind: ApplicationSet
@@ -101,9 +96,81 @@ patches:
     target:
       kind: ApplicationSet
       version: v1alpha1
+      name: mintmaker
+  - path: development-overlay-patch.yaml
+    target:
+      kind: ApplicationSet
+      version: v1alpha1
       name: integration
   - path: development-overlay-patch.yaml
     target:
       kind: ApplicationSet
       version: v1alpha1
       name: smee
+  - path: set-local-cluster-label.yaml
+    target:
+      kind: ApplicationSet
+      version: v1alpha1
+      name: keycloak
+  - path: development-overlay-patch.yaml
+    target:
+      kind: ApplicationSet
+      version: v1alpha1
+      name: keycloak
+  - path: set-local-cluster-label.yaml
+    target:
+      kind: ApplicationSet
+      version: v1alpha1
+      name: ui
+  - path: development-overlay-patch.yaml
+    target:
+      kind: ApplicationSet
+      version: v1alpha1
+      name: ui
+  - path: development-overlay-patch.yaml
+    target:
+      kind: ApplicationSet
+      version: v1alpha1
+      name: ca-bundle
+  - path: development-overlay-patch.yaml
+    target:
+      kind: ApplicationSet
+      version: v1alpha1
+      name: repository-validator
+  - path: development-overlay-patch.yaml
+    target:
+      kind: ApplicationSet
+      version: v1alpha1
+      name: project-controller
+  - path: development-overlay-patch.yaml
+    target:
+      kind: ApplicationSet
+      version: v1alpha1
+      name: spacerequest-cleaner
+  # The 'appstudio.redhat.com/eaas-cluster' cluster role label must also be present for
+  # cluster-as-a-service to be deployed.
+  - path: development-overlay-patch.yaml
+    target:
+      kind: ApplicationSet
+      version: v1alpha1
+      name: cluster-as-a-service
+  - path: development-overlay-patch.yaml
+    target:
+      kind: ApplicationSet
+      version: v1alpha1
+      name: tracing-workload-tracing
+  - path: development-overlay-patch.yaml
+    target:
+      kind: ApplicationSet
+      version: v1alpha1
+      name: tracing-workload-otel-collector
+  - path: development-overlay-patch.yaml
+    target:
+      kind: ApplicationSet
+      version: v1alpha1
+      name: tempo
+  - path: development-overlay-patch.yaml
+    target:
+      kind: ApplicationSet
+      version: v1alpha1
+      name: notification-controller

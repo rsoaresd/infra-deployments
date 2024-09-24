@@ -3,4 +3,4 @@ kind: Kustomization
 namespace: openshift-adp
 resources:
   - ../all-clusters
-  - backup-toolchain-host-schedule.yaml
+  - schedules

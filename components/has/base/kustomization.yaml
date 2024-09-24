@@ -3,7 +3,7 @@ kind: Kustomization
 resources:
   - ./argocd-roles
   - ./rbac
-  - https://github.com/redhat-appstudio/application-service/config/default?ref=2d425363673f7c798e29f186e27d24bb9704d004
+  - https://github.com/redhat-appstudio/application-service/config/default?ref=338ad7f4e3577aa7c9b5be293a97689d84a28442
 
 
 components:
@@ -13,7 +13,7 @@ components:
 images:
   - name: quay.io/redhat-appstudio/application-service
     newName: quay.io/redhat-appstudio/application-service
-    newTag: 2d425363673f7c798e29f186e27d24bb9704d004
+    newTag: 338ad7f4e3577aa7c9b5be293a97689d84a28442
 
 configMapGenerator:
   - literals:

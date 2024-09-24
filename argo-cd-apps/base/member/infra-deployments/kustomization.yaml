@@ -6,8 +6,6 @@ resources:
   - has
   - release
   - integration
-  - spi
-  - remote-secret-controller
   - enterprise-contract
   - build-service
   - jvm-build-service
@@ -15,9 +13,13 @@ resources:
   - build-templates
   - internal-services
   - image-controller
-  - segment-bridge
-  - toolchain-member-operator
   - multi-platform-controller
   - perf-team-prometheus-reader
+  - project-controller
+  - spacerequest-cleaner
+  - mintmaker
+  - tracing-workload-otel-collector
+  - tempo
+  - notification-controller
 components:
   - ../../../k-components/inject-infra-deployments-repo-details

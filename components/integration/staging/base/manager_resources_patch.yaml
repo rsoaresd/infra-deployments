@@ -1,0 +1,54 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: controller-manager
+  namespace: system
+spec:
+  template:
+    spec:
+      containers:
+      - name: manager
+        resources:
+          limits:
+            cpu: 500m
+            memory: 1Gi
+          requests:
+            cpu: 100m
+            memory: 20Mi
+        env:
+        - name: CONSOLE_NAME
+          valueFrom:
+              configMapKeyRef:
+                name: integration-config
+                key: CONSOLE_NAME
+                optional: true
+        - name: CONSOLE_URL
+          valueFrom:
+              configMapKeyRef:
+                name: integration-config
+                key: CONSOLE_URL
+                optional: true
+        - name: CONSOLE_URL_TASKLOG
+          valueFrom:
+            configMapKeyRef:
+              name: integration-config
+              key: CONSOLE_URL_TASKLOG
+              optional: true
+        - name: PIPELINE_TIMEOUT
+          valueFrom:
+            configMapKeyRef:
+              name: pipelinerun-options
+              key: PIPELINE_TIMEOUT
+              optional: true
+        - name: TASKS_TIMEOUT
+          valueFrom:
+            configMapKeyRef:
+              name: pipelinerun-options
+              key: TASKS_TIMEOUT
+              optional: true
+        - name: FINALLY_TIMEOUT
+          valueFrom:
+            configMapKeyRef:
+              name: pipelinerun-options
+              key: FINALLY_TIMEOUT
+              optional: true
